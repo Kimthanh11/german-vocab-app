@@ -73,6 +73,22 @@ export default function CreateLesson({ initialLesson, onBack, onSavedLesson, onA
     onSavedLesson?.({ id, title, content: input, dict: newDict });
   };
 
+  const [saving, setSaving] = useState(false);
+  const [savedAt, setSavedAt] = useState(null);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      setRendered(input); // keep your preview update
+      const lesson = { id, title, content: input, dict };
+      // If onSavedLesson returns a promise (App calls API), await it:
+      await onSavedLesson?.(lesson);
+      setSavedAt(new Date());
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow p-4 flex flex-col gap-4">
       <div className="flex items-center gap-2">
@@ -121,6 +137,19 @@ export default function CreateLesson({ initialLesson, onBack, onSavedLesson, onA
           </ul>
         </div>
       )}
+
+      <div className="flex gap-2 items-center">
+        <button
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+          onClick={handleSave}
+          disabled={saving}
+        >
+          {saving ? "Saving…" : "Create / Update Preview"}
+        </button>
+        <span className="text-sm text-gray-600">
+          {savedAt ? `Saved ✓ ${savedAt.toLocaleTimeString()}` : "Not saved yet"}
+        </span>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-// Flashcards.jsx
 import React from "react";
+import DBStatus from "../../components/DBStatus";
 
 export default function Flashcards({ cards, onBack, onDeleteCard }) {
   return (
@@ -12,16 +12,14 @@ export default function Flashcards({ cards, onBack, onDeleteCard }) {
       {cards.length ? (
         <ul className="grid sm:grid-cols-2 gap-3">
           {cards.map((c) => (
-            <li key={c.term} className="border rounded p-3 flex items-start justify-between gap-2">
+            <li key={c.id || c.term} className="border rounded p-3 flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <div className="font-semibold">{c.term}</div>
                 <div className="text-gray-600">{c.meaning}</div>
               </div>
               <button
                 className="shrink-0 px-2 py-1 text-xs rounded bg-red-50 text-red-600 border border-red-200"
-                onClick={() => onDeleteCard(c.term)}
-                aria-label={`Delete ${c.term}`}
-                title="Delete flashcard"
+                onClick={() => onDeleteCard(c.id ? { id: c.id } : { term: c.term })}
               >
                 Delete
               </button>
@@ -31,6 +29,9 @@ export default function Flashcards({ cards, onBack, onDeleteCard }) {
       ) : (
         <p className="text-gray-500">No flashcards yet. Add some from the Create screen.</p>
       )}
+
+      {/* NEW: DB status inline */}
+      <DBStatus />
     </div>
   );
 }
