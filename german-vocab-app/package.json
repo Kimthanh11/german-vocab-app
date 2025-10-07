@@ -12,6 +12,7 @@
   "dependencies": {
     "firebase": "^12.3.0",
     "lucide-react": "^0.545.0",
+    "mongoose": "^8.19.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
