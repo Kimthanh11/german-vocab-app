@@ -4,6 +4,7 @@ import Home from "./Home";
 import CreateLesson from "./CreateLesson";
 import Flashcards from "./Flashcards";
 import "./index.css";
+import { api } from "../lib/api";
 
 export default function App() {
   const [route, setRoute] = useState("home");
@@ -27,12 +28,14 @@ export default function App() {
     });
   };
 
-  const saveLesson = (lesson) => {
+  const saveLesson = async (lesson) => {
+    const saved = await api.saveLesson(lesson);
     setLessons((prev) => {
       const idx = prev.findIndex((l) => l.id === lesson.id);
       if (idx >= 0) { const copy = [...prev]; copy[idx] = lesson; return copy; }
       return [lesson, ...prev];
     });
+    return saved;
   };
 
   const openLesson = (lesson) => { setSelectedLesson(lesson); setRoute("create"); };

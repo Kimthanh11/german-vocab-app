@@ -1,5 +1,5 @@
 import React from "react";
-import DBStatus from "../../components/DBStatus";
+import DBStatus from "../components/DBStatus";
 
 export default function Flashcards({ cards, onBack, onDeleteCard }) {
   return (
