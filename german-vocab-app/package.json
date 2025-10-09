@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port %PORT% --host",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "db:init": "node --env-file=.env scripts/init-db.mjs"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "firebase": "^12.3.0",
     "lucide-react": "^0.545.0",
     "mongoose": "^8.19.1",

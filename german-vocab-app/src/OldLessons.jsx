@@ -98,18 +98,20 @@ function LessonCard({ lesson, onOpenLesson, onDeleteLesson }) {
 }
 
 /* ---- list ---- */
-export default function OldLessons({ lessons = [], onOpenLesson, onDeleteLesson }) {
-  if (!lessons.length) {
-    return (
-      <div className="w-full max-w-3xl text-center text-gray-500">
-        No lessons yet.
-      </div>
-    );
+export default function OldLessons({ lessons, onOpenLesson, onDeleteLesson }) {
+  const items = Array.isArray(lessons)
+    ? lessons
+    : Array.isArray(lessons?.data)
+      ? lessons.data
+      : Object.values(lessons || {}); // last-resort: object → values
+
+  if (!items.length) {
+    return <div className="w-full max-w-3xl text-center text-gray-500">No lessons yet.</div>;
   }
 
   return (
     <div className="w-full max-w-3xl grid gap-4">
-      {lessons.map((l) => (
+      {items.map((l) => (
         <LessonCard
           key={l.id}
           lesson={l}

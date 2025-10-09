@@ -51,16 +51,18 @@ export const api = {
     fetchJSON("/api/flashcards"),
 
   addFlashcard: (card) =>
-    fetchJSON("/api/flashcards", {
-      method: "POST",
+  fetchJSON("/api/flashcards", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(card), // { term, meaning, lesson_id, context }
+  }),
+
+  // api.js
+  deleteFlashcard: (by) =>
+    fetchJSON(`/api/flashcards`, {
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(card), // { term, meaning, lesson_id? }
+      body: JSON.stringify(by), // { id } or { term, lesson_id }
     }),
 
-  deleteFlashcard: (by) =>
-  fetchJSON("/api/flashcards", {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(by), // { id } or { term, lesson_id }
-  }),
 };
